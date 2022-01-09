@@ -1,13 +1,13 @@
 require('dotenv').config();
 const express = require('express');
-const { User } = require('../models/user');
+const { User } = require('../models');
 
 const router = express.Router();
 
 router.post('/', async (req, res) => {
   try {
-    const { fullName, email } = req.body;
-    const newUser = await User.create({ fullName, email });
+    const { displayName, email, password, image } = req.body;
+    const newUser = await User.create({ displayName, email, password, image });
 
     return res.status(201).json(newUser);
   } catch (e) {
