@@ -1,5 +1,7 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const codes = require('../helpers/codes');
+const messages = require('../helpers/messages');
 
 const tokenPass = process.env.JWT_SECRET_KEY;
 
@@ -19,13 +21,13 @@ module.exports = (req, res, next) => {
   try {
     const { authorization } = req.headers;
 
-    if (!authorization) {
-      return res.status(401).send({ message: 'missing auth token' });
+    if (authorization === undefined || authorization === '') {
+      return res.status(codes.Unauthorized).send({ message: messages.tokenNotFound });
     }
 
     const user = verifyToken(authorization);
     if (!user) {
-      return res.status(401).send({ message: 'jwt malormed' });
+      return res.status(codes.Unauthorized).send({ message: messages.TokenExpiredOrInvalid });
     }
     req.user = user;
 

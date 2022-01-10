@@ -7,12 +7,16 @@ const nameMinLen = 8;
 const passMinLen = 6;
 
 const displayNameValidate = (req, res, next) => {
-  const { displayName } = req.body;
-
-  if (!displayName) return res.status(codes.badRequest).json({ message: messages.displayName });
-
-  if (displayName.length < nameMinLen) {
-    return res.status(codes.badRequest).json({ message: messages.displayName });
+  try {
+    const { displayName } = req.body;
+  
+    if (!displayName) return res.status(codes.badRequest).json({ message: messages.displayName });
+  
+    if (displayName.length < nameMinLen) {
+      return res.status(codes.badRequest).json({ message: messages.displayName });
+    }
+  } catch (err) {
+    console.log(err.message);
   }
 
   next();
@@ -38,28 +42,51 @@ const emailValidate = async (req, res, next) => {
 };
 
 const passwordValidate = (req, res, next) => {
-  const { password } = req.body;
-
-  if (!password) return res.status(codes.badRequest).json({ message: messages.passwordRequired });
-  if (password.length < passMinLen) {
-    return res.status(codes.badRequest).json({ message: messages.passwordLength });
+  try {
+    const { password } = req.body;
+  
+    if (!password) return res.status(codes.badRequest).json({ message: messages.passwordRequired });
+    if (password.length < passMinLen) {
+      return res.status(codes.badRequest).json({ message: messages.passwordLength });
+    }
+  } catch (err) {
+    console.log(err.message);
   }
 
   next();
 };
 
 const createUser = async (req, _res, next) => {
-  const { displayName, email, password, image } = req.body;
-  await User.create({ displayName, email, password, image });
+  try {
+    const { displayName, email, password, image } = req.body;
+    await User.create({ displayName, email, password, image });
+  } catch (err) {
+    console.log(err.message);
+  }
 
   next();
 };
 
 const createToken = (req, res) => {
+  try {
   const { displayName, email, password, image } = req.body;
   const token = tokenGenerate({ displayName, email, password, image });
   
   return res.status(codes.created).json({ token });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+const getUsers = async (_req, res, next) => {
+  try {
+    const users = await User.findAll();
+
+    return res.status(codes.ok).json(users);
+  } catch (e) {
+    console.log(e.message);
+  }
+  next();
 };
 
 module.exports = {
@@ -68,4 +95,5 @@ module.exports = {
   passwordValidate,
   createUser,
   createToken,
+  getUsers,
 };

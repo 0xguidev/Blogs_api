@@ -1,11 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const { User } = require('../models');
+const Auth = require('../middlewares/validateJWT');
 const {
   displayNameValidate,
   emailValidate,
   passwordValidate,
   createUser,
+  getUsers,
   createToken } = require('../middlewares/validateUserData');
 
 const router = express.Router();
@@ -17,16 +19,7 @@ router.post('/',
   createUser,
   createToken);
 
-router.get('/', async (_req, res) => {
-  try {
-    const users = await User.findAll();
-
-    return res.status(200).json(users);
-  } catch (e) {
-    console.log(e.message);
-    res.status(500).json({ message: e.message });
-  }
-});
+router.get('/', Auth, getUsers);
 
 router.get('/:id', async (req, res) => {
   try {
