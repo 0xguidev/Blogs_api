@@ -5,7 +5,8 @@ const {
   displayNameValidate,
   emailValidate,
   passwordValidate,
-  tokenGenerate } = require('../middlewares/validateUserData');
+  createUser,
+  createToken } = require('../middlewares/validateUserData');
 
 const router = express.Router();
 
@@ -13,19 +14,8 @@ router.post('/',
   displayNameValidate,
   emailValidate,
   passwordValidate,
-  async (req, res) => {
-    try {
-      const { displayName, email, password, image } = req.body;
-
-      await User.create({ displayName, email, password, image });
-
-      const token = tokenGenerate({ displayName, email, password, image });
-
-      return res.status(201).json({ token });
-    } catch (e) {
-      console.log(e.message);
-    }
-  });
+  createUser,
+  createToken);
 
 router.get('/', async (_req, res) => {
   try {

@@ -1,22 +1,7 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
 const { User } = require('../models');
-
-const codes = {
-  ok: 200,
-  created: 201,
-  badRequest: 400,
-  conflict: 409,
-};
-
-const messages = {
-  displayName: '"displayName" length must be at least 8 characters long',
-  emailNotValid: '"email" must be a valid email',
-  emailRequired: '"email" is required',
-  passwordLength: '"password" length must be 6 characters long',
-  passwordRequired: '"password" is required',
-  userExist: 'User already registered',
-};
+const codes = require('../helpers/codes');
+const messages = require('../helpers/messages');
+const tokenGenerate = require('../helpers/tokenGenerate');
 
 const nameMinLen = 8;
 const passMinLen = 6;
@@ -63,14 +48,24 @@ const passwordValidate = (req, res, next) => {
   next();
 };
 
-const tokenGenerate = (user) => {
-  const tokenPass = process.env.JWT_SECRET_KEY;
-  return jwt.sign({ data: user }, tokenPass);
+const createUser = async (req, _res, next) => {
+  const { displayName, email, password, image } = req.body;
+  await User.create({ displayName, email, password, image });
+
+  next();
+};
+
+const createToken = (req, res) => {
+  const { displayName, email, password, image } = req.body;
+  const token = tokenGenerate({ displayName, email, password, image });
+  
+  return res.status(codes.created).json({ token });
 };
 
 module.exports = {
   displayNameValidate,
   emailValidate,
   passwordValidate,
-  tokenGenerate,
+  createUser,
+  createToken,
 };

@@ -25,7 +25,7 @@ module.exports = (req, res, next) => {
 
     const user = verifyToken(authorization);
     if (!user) {
-      return res.status(401).send({ message: 'jwt maldormed' });
+      return res.status(401).send({ message: 'jwt malormed' });
     }
     req.user = user;
 

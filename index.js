@@ -14,9 +14,11 @@ app.get('/', (request, response) => {
 // não remova esse endpoint, e para o avaliador funcionar
 
 const userControler = require('./controler/userControler');
+const loginControler = require('./controler/loginControler');
 // const Auth = require('./middlewares/validateJWT');
 
 app.use('/user', userControler);
+app.use('/login', loginControler);
 
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
 
