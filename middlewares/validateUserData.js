@@ -89,6 +89,20 @@ const getUsers = async (_req, res, next) => {
   next();
 };
 
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByPk(id);
+
+    if (!user) return res.status(codes.notFound).json({ message: messages.userNotExist });
+
+    return res.status(200).json(user);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: e.message });
+  }
+};
+
 module.exports = {
   displayNameValidate,
   emailValidate,
@@ -96,4 +110,5 @@ module.exports = {
   createUser,
   createToken,
   getUsers,
+  getUserById,
 };

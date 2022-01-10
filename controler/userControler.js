@@ -8,6 +8,7 @@ const {
   passwordValidate,
   createUser,
   getUsers,
+  getUserById,
   createToken } = require('../middlewares/validateUserData');
 
 const router = express.Router();
@@ -21,19 +22,7 @@ router.post('/',
 
 router.get('/', Auth, getUsers);
 
-router.get('/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const user = await User.findByPk(id);
-
-    if (!user) return res.status(404).json({ message: 'Usuário não encontrado' });
-
-    return res.status(200).json(user);
-  } catch (e) {
-    console.log(e.message);
-    res.status(500).json({ message: e.message });
-  }
-});
+router.get('/:id', Auth, getUserById);
 
 router.put('/:id', async (req, res) => {
   try {
