@@ -1,5 +1,6 @@
 const messages = {
   displayName: '"displayName" length must be at least 8 characters long',
+  nameRequire: '"name" is required',
 
   emailNotValid: '"email" must be a valid email',
   emailRequired: '"email" is required',

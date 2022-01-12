@@ -15,10 +15,11 @@ app.get('/', (request, response) => {
 
 const userControler = require('./controler/userControler');
 const loginControler = require('./controler/loginControler');
-// const Auth = require('./middlewares/validateJWT');
+const categoriesControler = require('./controler/categoriesControler');
 
 app.use('/user', userControler);
 app.use('/login', loginControler);
+app.use('/categories', categoriesControler);
 
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
 
