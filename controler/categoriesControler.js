@@ -10,6 +10,7 @@ const Auth = require('../middlewares/validateJWT');
 const router = express.Router();
 
 router.get('/',
+  Auth,
   getAllCategories);
 
 router.post('/',
