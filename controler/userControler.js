@@ -20,9 +20,13 @@ router.post('/',
   createUser,
   createToken);
 
-router.get('/', Auth, getUsers);
+router.get('/',
+  Auth,
+  getUsers);
 
-router.get('/:id', Auth, getUserById);
+router.get('/:id',
+  Auth,
+  getUserById);
 
 router.put('/:id', async (req, res) => {
   try {
