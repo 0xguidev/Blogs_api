@@ -16,10 +16,12 @@ app.get('/', (request, response) => {
 const userControler = require('./controler/userControler');
 const loginControler = require('./controler/loginControler');
 const categoriesControler = require('./controler/categoriesControler');
+const postControler = require('./controler/postControler.js');
 
 app.use('/user', userControler);
 app.use('/login', loginControler);
 app.use('/categories', categoriesControler);
+app.use('/post', postControler);
 
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
 

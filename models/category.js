@@ -3,6 +3,11 @@ const Category = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
   }, { timestamps: false });
 
+  Categories.associate = (models) => {
+    Categories.hasMany(models.BlogPost,
+      { foreignKey: 'category_id', as: 'post' });
+  };
+
   return Categories;
 };
 

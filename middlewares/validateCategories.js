@@ -8,6 +8,8 @@ const nameValidate = async (req, res, next) => {
   if (name === undefined) {
     return res.status(codes.badRequest).json({ message: messages.nameRequire });
   }
+  const isExist = await Category.findOne({ where: { name } });
+  console.log(isExist);
 
   next();
 };
