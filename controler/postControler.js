@@ -5,6 +5,7 @@ const {
   contentValidate,
   categoriesValidate,
   createPost,
+  findAllPosts,
 } = require('../middlewares/validatePost');
 
 // Category
@@ -17,6 +18,12 @@ router.post(
   contentValidate,
   categoriesValidate,
   createPost,
+);
+
+router.get(
+  '/',
+  Auth,
+  findAllPosts,
 );
 
 module.exports = router;

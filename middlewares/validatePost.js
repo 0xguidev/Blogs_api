@@ -44,7 +44,7 @@ const categoriesValidate = async (req, res, next) => {
   next();
 };
 
-const createPost = async (req, res, _next) => {
+const createPost = async (req, res) => {
   const { title, content, categoryIds } = req.body;
   const { email } = req.user;
 
@@ -58,9 +58,27 @@ const createPost = async (req, res, _next) => {
   return res.status(codes.created).json(post);
 };
 
+const findAllPosts = async (_req, res) => {
+  const allPosts = await BlogPost.findAll({
+    include: [
+      {
+      model: User,
+      as: 'user',
+    },
+    {
+        model: Category,
+        as: 'categories',
+      },
+    ],
+  });
+
+  return res.status(codes.ok).json(allPosts);
+};
+
 module.exports = {
   titleValidate,
   contentValidate,
   categoriesValidate,
   createPost,
+  findAllPosts,
 };
