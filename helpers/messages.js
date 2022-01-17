@@ -23,8 +23,8 @@ const messages = {
 
   contentRequired: '"content" is required',
 
-  categoryIdRequired: '"categoryId" is required',
-  categoryIdsNotFound: '"categoryIds" is not found',
+  categoryIdRequired: '"categoryIds" is required',
+  categoryIdsNotFound: '"categoryIds" not found',
   categoryNotEdit: 'Categories cannot be edited',
 
   postNotExist: 'Post does not exist',

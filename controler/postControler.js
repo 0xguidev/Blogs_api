@@ -1,13 +1,22 @@
 const express = require('express');
+const Auth = require('../middlewares/validateJWT');
+const {
+  titleValidate,
+  contentValidate,
+  categoriesValidate,
+  createPost,
+} = require('../middlewares/validatePost');
 
+// Category
 const router = express.Router();
 
 router.post(
   '/',
-  async (req, _res, _next) => {
-    const { title, content, categoryId } = req.body;
-    console.log(title, content, categoryId);
-  },
+  Auth,
+  titleValidate,
+  contentValidate,
+  categoriesValidate,
+  createPost,
 );
 
 module.exports = router;

@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const codes = require('../helpers/codes');
 const messages = require('../helpers/messages');
 
-const tokenPass = process.env.JWT_SECRET_KEY;
+const tokenPass = process.env.JWT_SECRET;
 
 const verifyToken = (token) => {
   try {
